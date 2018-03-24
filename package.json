@@ -1,0 +1,29 @@
+{
+  "name": "animate-landing-page",
+  "description": "animate-landing-page",
+  "version": "0.0.1",
+  "main": "index.js",
+  "keywords": [
+    "animation",
+    "landing-page"
+  ],
+  "author": "",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:phatpt8/react-landing-page.git"
+  },
+  "scripts": {},
+  "dependencies": {
+    "antd": "^2.13.6",
+    "classnames": "^2.2.5",
+    "dva": "^2.1.0",
+    "rc-banner-anim": "^1.0.0",
+    "rc-queue-anim": "1.x",
+    "rc-scroll-anim": "2.x",
+    "rc-tween-one": "1.x",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0"
+  },
+  "devDependencies": {}
+}

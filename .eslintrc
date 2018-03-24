@@ -1,0 +1,33 @@
+{
+  "parser": "babel-eslint",
+  "globals": {
+    "it": true,
+    "describe": true,
+    "require": true,
+    "process": true,
+    "before": true,
+    "after": true,
+    "beforeEach": true,
+    "afterEach": true,
+    "__DEVTOOLS__": true,
+    "__DEV__": true,
+    "__DEV_MODE__": true
+  },
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "rules": {
+    "no-debugger": "off",
+    "strict": "off",
+    "no-script-url": "warn",
+    "max-len": "off",
+    "no-new": "warn",
+    "no-mixed-operators": "off",
+    "comma-dangle": [
+      "error",
+      "only-multiline"
+    ],
+    "function-paren-newline": "off"
+  }
+}
