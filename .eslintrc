@@ -1,4 +1,5 @@
 {
+  "extends": "umi",
   "parser": "babel-eslint",
   "globals": {
     "it": true,
