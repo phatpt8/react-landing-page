@@ -22,11 +22,11 @@ function SiderMenu({ collapsed }) {
       <Menu mode={ collapsed ? 'vertical' : 'inline' } theme="dark">
         <Item key="users">
           <Icon type="team" />
-          {!collapsed && <span>Accounts</span>}
+          <span>Accounts</span>
         </Item>
         <Item key="articles">
           <Icon type="paper-clip" />
-          {!collapsed && <span>Articles</span>}
+          <span>Articles</span>
         </Item>
       </Menu>
     </div>
