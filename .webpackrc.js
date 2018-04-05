@@ -8,6 +8,13 @@ export default {
   },
   "disableCSSModules": true,
   "outputPath": `./${dest_dir}`,
+  "proxy": {
+    "/api": {
+      "target": "http://localhost:8080/api/",
+      "changeOrigin": true,
+      "pathRewrite": { "^/api" : "" }
+    }
+  },
   "env": {
     "development": {
       "extraBabelPlugins": [
@@ -26,9 +33,5 @@ export default {
       "libraryName": "antd",
       "style": true
     }]
-    // ,
-    // ["react-intl", {
-    //   "messagesDir": "./extracted-messages/"
-    // }]
   ]
 }

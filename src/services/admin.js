@@ -1,25 +1,21 @@
-import request from '../utils/request';
+import { get, post, put, del } from '../utils/request';
+
+export function login(values) {
+  return post('/api/login', values)
+}
 
 export function fetch({ page = 1 }) {
-  return request(`/api/users?_page=${page}&_limit=5`);
+  return get(`/api/users`);
 }
 
 export function remove(id) {
-  return request(`/api/users/${id}`, {
-    method: 'DELETE',
-  });
+  return del(`/api/users/${id}`);
 }
 
-export function patch(id, values) {
-  return request(`/api/users/${id}`, {
-    method: 'PATCH',
-    body: JSON.stringify(values),
-  });
+export function update(id, values) {
+  return put(`/api/users/${id}`, values);
 }
 
 export function create(values) {
-  return request('/api/users', {
-    method: 'POST',
-    body: JSON.stringify(values),
-  });
+  return post('/api/users', values);
 }

@@ -18,7 +18,13 @@ function checkStatus(response) {
  * @return {object}           An object containing either "data" or "err"
  */
 const request = async (url, options) => {
-  const response = await fetch(url, options);
+  const response = await fetch(url, {
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    ...options,
+  });
 
   checkStatus(response);
 
@@ -38,24 +44,20 @@ const request = async (url, options) => {
 
 export const get = (url) => request(url, {
   method: 'GET',
-  credentials: 'include',
 });
 
 export const post = (url, body) => request(url, {
   method: 'POST',
-  credentials: 'include',
   body: JSON.stringify(body),
 });
 
 export const put = (url, body) => request(url, {
   method: 'PUT',
-  credentials: 'include',
   body: JSON.stringify(body),
 });
 
 export const del = (url) => request(url, {
   method: 'DELETE',
-  credentials: 'include',
 });
 
 export default request;

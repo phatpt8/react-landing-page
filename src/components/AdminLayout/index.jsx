@@ -3,39 +3,52 @@ import { connect } from 'dva';
 import { Layout, Menu, Icon } from 'antd';
 import './index.css';
 
-const { Header, Sider, Footer } = Layout;
-const { SubMenu, Item } = Menu;
+const { Sider, Footer } = Layout;
+const { Item } = Menu;
 
-function SiderMenu({ collapsed = false }) {
+/*
+  <SubMenu title={
+          <span>
+            <Icon type="user" />
+            {!!collapsed && <span>Accounts</span>}
+          </span>
+        }>
+          <Item>SubMenu Item</Item>
+        </SubMenu>
+*/
+function SiderMenu({ collapsed }) {
   return (
-    <Menu mode={collapsed?'vertical':'inline'} theme="dark">
-      <SubMenu title={
-        <span>
-          <Icon type="search" />
-          {collapsed? '' : <span>Menu Name</span>}
-        </span>
-      }>
-        <Item>SubMenu Item</Item>
-      </SubMenu>
-    </Menu>
+    <div className="sider-menu">
+      <Menu mode={ collapsed ? 'vertical' : 'inline' } theme="dark">
+        <Item key="users">
+          <Icon type="team" />
+          {!collapsed && <span>Accounts</span>}
+        </Item>
+        <Item key="articles">
+          <Icon type="paper-clip" />
+          {!collapsed && <span>Articles</span>}
+        </Item>
+      </Menu>
+    </div>
   )
 }
 
-function AdminLayout({ children }) {
+function AdminLayout({ children, collapsed, dispatch }) {
+  //<Header><span onClick={() => { dispatch({ type: 'layout/toggleSider', payload: { collapsed: !collapsed } })}}>TEAMUG Header</span></Header>
+  const onCollapseHandler = (collapsed) => {
+    dispatch({ type: 'layout/toggleSider', payload: { collapsed } })
+  }
   return (
     <Layout className="admin-layout">
-      <Sider width={175} collapsible>
-        <SiderMenu />
+      <Sider width={175} collapsible collapsed={collapsed} onCollapse={onCollapseHandler}>
+        <SiderMenu collapsed={collapsed}/>
       </Sider>
       <Layout>
-        <Header><span>TEAMUG</span></Header>
         {children}
-        <Footer>footer</Footer>
+        <Footer style={{ textAlign: 'center' }}>Team UG @2018</Footer>
       </Layout>
     </Layout>
   );
 }
 
-AdminLayout.propTypes = {};
-
-export default connect(state => ({...state}))(AdminLayout);
+export default connect(({ layout }) => layout)(AdminLayout);
