@@ -1,5 +1,8 @@
 {
   "extends": "umi",
+  "plugins": [
+    "prettier"
+  ],
   "parser": "babel-eslint",
   "globals": {
     "it": true,
@@ -29,6 +32,7 @@
       "error",
       "only-multiline"
     ],
-    "function-paren-newline": "off"
+    "function-paren-newline": "off",
+    "prettier/prettier": "error"
   }
 }

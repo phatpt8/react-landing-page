@@ -11,10 +11,15 @@ app.use(bodyParser.json());
 
 router.route('/login').post(({ body }, res) => {
   const { username, password } = body;
-  const { count, userName, role } = db.prepare('SELECT COUNT(*) as count, username as userName, role FROM admin WHERE username=? AND password=?').get(username, password);
+  const { count, userName, role } = db
+    .prepare(
+      'SELECT COUNT(*) as count, username as userName, role FROM admin WHERE username=? AND password=?'
+    )
+    .get(username, password);
   res.json({ count, username: userName, role });
 });
-router.route('/admins')
+router
+  .route('/admins')
   .get((req, res) => {
     const data = db.prepare('SELECT rowid, username, password, role FROM admin').all();
     res.json({ data });
@@ -37,9 +42,12 @@ router.route('/admins')
     const { changes } = stmt.run(rowid);
     res.json({ changes });
   });
-router.route('articles')
+router
+  .route('/articles')
   .get((req, res) => {
-    const data = db.prepare('SELECT rowid, title, content, authorId, videoUrl, imageUrl FROM article').all();
+    const data = db
+      .prepare('SELECT rowid, title, content, authorId, videoUrl, imageUrl FROM article')
+      .all();
     res.json({ data });
   })
   .post(({ body }, res) => {
@@ -50,7 +58,9 @@ router.route('articles')
   })
   .put(({ body }, res) => {
     const { rowid, title, content, authorId, videoUrl, imageUrl } = body;
-    const stmt = db.prepare('UPDATE article SET title=?, content=?, videoUrl=?, imageUrl=? WHERE rowid=? AND authorId=?');
+    const stmt = db.prepare(
+      'UPDATE article SET title=?, content=?, videoUrl=?, imageUrl=? WHERE rowid=? AND authorId=?'
+    );
     const { changes } = stmt.run(title, content, videoUrl, imageUrl, rowid, authorId);
     res.json({ changes });
   })
@@ -64,7 +74,9 @@ router.route('articles')
 app.use('/api', router);
 app.listen(port, () => {
   db.exec('CREATE TABLE IF NOT EXISTS admin (username TEXT UNIQUE, password TEXT, role TEXT)');
-  db.exec('CREATE TABLE IF NOT EXISTS article (title TEXT, content TEXT, authorId TEXT, videoUrl TEXT, imageUrl TEXT)');
+  db.exec(
+    'CREATE TABLE IF NOT EXISTS article (title TEXT, content TEXT, authorId TEXT, videoUrl TEXT, imageUrl TEXT)'
+  );
   db.exec(`
     INSERT OR IGNORE INTO admin
     VALUES ('superadmin', '123456', 'super_moderator')

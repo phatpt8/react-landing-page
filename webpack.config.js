@@ -2,7 +2,7 @@ const path = require('path');
 
 const cwd = process.cwd();
 
-module.exports = (webpackConfig) => {
+module.exports = webpackConfig => {
   const config = webpackConfig;
   config.resolve.extensions.push('.less');
   config.resolve.extensions.push('.js');

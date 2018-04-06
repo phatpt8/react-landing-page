@@ -20,8 +20,8 @@ function checkStatus(response) {
 const request = async (url, options) => {
   const response = await fetch(url, {
     headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
     },
     ...options,
   });
@@ -30,34 +30,29 @@ const request = async (url, options) => {
 
   const data = await response.json();
 
-  const ret = {
-    data,
-    headers: {},
-  };
+  return { ...data };
+};
 
-  if (response.headers.get('x-total-count')) {
-    ret.headers['x-total-count'] = response.headers.get('x-total-count');
-  }
+export const get = url =>
+  request(url, {
+    method: 'GET',
+  });
 
-  return ret;
-}
+export const post = (url, body) =>
+  request(url, {
+    method: 'POST',
+    body: JSON.stringify(body),
+  });
 
-export const get = (url) => request(url, {
-  method: 'GET',
-});
+export const put = (url, body) =>
+  request(url, {
+    method: 'PUT',
+    body: JSON.stringify(body),
+  });
 
-export const post = (url, body) => request(url, {
-  method: 'POST',
-  body: JSON.stringify(body),
-});
-
-export const put = (url, body) => request(url, {
-  method: 'PUT',
-  body: JSON.stringify(body),
-});
-
-export const del = (url) => request(url, {
-  method: 'DELETE',
-});
+export const del = url =>
+  request(url, {
+    method: 'DELETE',
+  });
 
 export default request;

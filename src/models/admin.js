@@ -1,36 +1,75 @@
 import * as adminService from '../services/admin';
+import { routerRedux } from 'dva/router';
+import { notification } from 'antd';
 
 export default {
   namespace: 'admin',
   state: {
-    isAuth: false,
+    isAuth: true,
     username: '',
     role: '',
+    error: '',
+    articles: [],
+    creatingArticle: false,
   },
   reducers: {
     save(state, { payload }) {
       return { ...state, ...payload };
-    }
+    },
   },
   effects: {
     *login({ payload: { username, password } }, { call, put }) {
-      const { data: { count, role, userName = username } } = yield call(adminService.login, {
-        username,
-        password,
-      });
-      if (!!count) {
-        yield put({
-          type: 'save',
-          payload: {
-            username: userName,
-            role,
-            isAuth: true,
-          }
-        })
+      try {
+        const { data: { count, role, userName = username } } = yield call(adminService.login, {
+          username,
+          password,
+        });
+        if (!!count) {
+          yield put({
+            type: 'save',
+            payload: {
+              username: userName,
+              role,
+              isAuth: true,
+            },
+          });
+          yield put(routerRedux.push('/admin/articles'));
+        }
+      } catch (e) {
+        notification.error({
+          message: 'Error occurs',
+          description: 'Server is offline',
+        });
       }
-    }
+    },
+    *loadArticles({ payload }, { call, put }) {
+      try {
+        const { data: articles } = yield call(adminService.fetchArticles);
+        yield put({ type: 'save', payload: { articles } });
+      } catch (e) {
+        notification.error({
+          message: 'Error occurs',
+          description: 'Server is offline',
+        });
+      }
+    },
+    *newArticle({ payload: { newArticle } }, { put }) {
+      yield put({
+        type: 'save',
+        payload: {
+          newArticle,
+        },
+      });
+      yield put(routerRedux.push(newArticle ? '/admin/articles/create' : '/admin/articles'));
+    },
   },
   subscriptions: {
-    
+    setup({ history, dispatch }) {
+      return history.listen(({ pathname }) => {
+        if (pathname === '/admin/articles') {
+          dispatch({ type: 'loadArticles' });
+        }
+      });
+    },
   },
 };

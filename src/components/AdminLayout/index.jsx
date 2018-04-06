@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'dva';
 import { Layout, Menu, Icon } from 'antd';
+import FormLogin from '$components/FormLogin';
 import './index.css';
 
 const { Sider, Footer } = Layout;
@@ -19,7 +20,7 @@ const { Item } = Menu;
 function SiderMenu({ collapsed }) {
   return (
     <div className="sider-menu">
-      <Menu mode={ collapsed ? 'vertical' : 'inline' } theme="dark">
+      <Menu mode={collapsed ? 'vertical' : 'inline'} theme="dark">
         <Item key="users">
           <Icon type="team" />
           <span>Accounts</span>
@@ -30,25 +31,25 @@ function SiderMenu({ collapsed }) {
         </Item>
       </Menu>
     </div>
-  )
+  );
 }
 
-function AdminLayout({ children, collapsed, dispatch }) {
+function AdminLayout({ children, dispatch, layout: { collapsed }, admin: { isAuth } }) {
   //<Header><span onClick={() => { dispatch({ type: 'layout/toggleSider', payload: { collapsed: !collapsed } })}}>TEAMUG Header</span></Header>
-  const onCollapseHandler = (collapsed) => {
-    dispatch({ type: 'layout/toggleSider', payload: { collapsed } })
-  }
+  const onCollapseHandler = collapsed => {
+    dispatch({ type: 'layout/toggleSider', payload: { collapsed } });
+  };
   return (
     <Layout className="admin-layout">
       <Sider width={175} collapsible collapsed={collapsed} onCollapse={onCollapseHandler}>
-        <SiderMenu collapsed={collapsed}/>
+        <SiderMenu collapsed={collapsed} />
       </Sider>
       <Layout>
-        {children}
+        <div className="admin-homepage">{isAuth ? children : <FormLogin />}</div>
         <Footer style={{ textAlign: 'center' }}>Team UG @2018</Footer>
       </Layout>
     </Layout>
   );
 }
 
-export default connect(({ layout }) => layout)(AdminLayout);
+export default connect(({ layout, admin }) => ({ layout, admin }))(AdminLayout);

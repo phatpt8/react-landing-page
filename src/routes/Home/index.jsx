@@ -4,10 +4,6 @@ import { connect } from 'dva';
 import './index.css';
 
 class IndexPage extends PureComponent {
-  componentDidMount() {
-    
-  }
-
   render() {
     return (
       <div className="home-page">
@@ -17,6 +13,4 @@ class IndexPage extends PureComponent {
   }
 }
 
-IndexPage.propTypes = {};
-
-export default connect(state => ({...state}))(IndexPage);
+export default connect(state => ({ ...state }))(IndexPage);

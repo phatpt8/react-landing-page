@@ -17,10 +17,11 @@
     "start": "roadhog server",
     "build": "roadhog build",
     "lint": "eslint --ext .js src test",
-    "precommit": "npm run lint"
+    "prettier": "prettier-eslint --write \"src/**/*.{js,jsx}\"",
+    "precommit": "npm run prettier && npm run lint"
   },
   "dependencies": {
-    "antd": "^2.13.6",
+    "antd": "^3.4.0",
     "better-sqlite3": "^4.1.0",
     "body-parser": "^1.18.2",
     "classnames": "^2.2.5",
@@ -43,8 +44,10 @@
     "eslint-plugin-flowtype": "^2.34.1",
     "eslint-plugin-import": "^2.6.0",
     "eslint-plugin-jsx-a11y": "^5.1.1",
+    "eslint-plugin-prettier": "^2.6.0",
     "eslint-plugin-react": "^7.1.0",
     "husky": "^0.12.0",
+    "prettier": "^1.11.1",
     "redbox-react": "^1.4.3",
     "roadhog": "^2.0.0"
   }
