@@ -1,0 +1,19 @@
+.create-article {
+
+}
+
+.create-article-input {
+  max-width: 600px;
+}
+
+.create-article-editor {
+  width: 90%;
+  margin: 0 auto;
+}
+
+.create-article-editor-textarea {
+  border: 1px solid #F1F1F1 !important;
+  padding: 5px !important;
+  border-radius: 2px !important;
+  min-height: 300px;
+}

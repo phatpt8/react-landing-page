@@ -1,8 +1,10 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
+import { routerRedux } from 'dva/router';
 import AdminLayout from '$components/AdminLayout';
 import ActionNav from '$components/ActionNav';
 import ListArticles from '$components/ListArticles';
+import CreateArticle from '$components/CreateArticle';
 import './index.css';
 
 class AdminArticles extends PureComponent {
@@ -16,7 +18,7 @@ class AdminArticles extends PureComponent {
             onBack={onCreateArticle(false)}
             showBackBtn={newArticle}
           />
-          {newArticle ? <span>New article</span> : <ListArticles articles={articles} />}
+          {newArticle ? <CreateArticle /> : <ListArticles articles={articles} />}
         </div>
       </AdminLayout>
     );
@@ -26,8 +28,10 @@ class AdminArticles extends PureComponent {
 const mapStateToProps = ({ admin }) => admin;
 const dispatchPropsToState = dispatch => {
   return {
-    onCreateArticle: newArticle => () =>
-      dispatch({ type: 'admin/newArticle', payload: { newArticle } }),
+    onCreateArticle: newArticle => () => {
+      dispatch({ type: 'admin/newArticle', payload: { newArticle } });
+      dispatch(routerRedux.push(newArticle ? '/admin/articles/create' : '/admin/articles'));
+    },
   };
 };
 export default connect(mapStateToProps, dispatchPropsToState)(AdminArticles);

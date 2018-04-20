@@ -60,7 +60,6 @@ export default {
           newArticle,
         },
       });
-      yield put(routerRedux.push(newArticle ? '/admin/articles/create' : '/admin/articles'));
     },
   },
   subscriptions: {
@@ -68,6 +67,9 @@ export default {
       return history.listen(({ pathname }) => {
         if (pathname === '/admin/articles') {
           dispatch({ type: 'loadArticles' });
+        }
+        if (pathname === '/admin/articles/create') {
+          dispatch({ type: 'newArticle', payload: { newArticle: true } });
         }
       });
     },

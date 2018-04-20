@@ -33,6 +33,6 @@
       "only-multiline"
     ],
     "function-paren-newline": "off",
-    "prettier/prettier": "error"
+    "prettier/prettier": "warn"
   }
 }
