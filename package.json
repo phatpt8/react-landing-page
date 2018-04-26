@@ -15,6 +15,7 @@
   },
   "scripts": {
     "start": "roadhog server",
+    "start:server": "node server",
     "build": "roadhog build",
     "lint": "./node_modules/.bin/eslint --ext .js src test",
     "prettier": "prettier --write \"src/**/*.{js,jsx}\"",

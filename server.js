@@ -1,6 +1,7 @@
 const Database = require('better-sqlite3');
 const db = new Database('landing.db');
 const express = require('express');
+const path = require('path');
 const app = express();
 const bodyParser = require('body-parser');
 const port = process.env.PORT || 8080;
@@ -8,6 +9,7 @@ const router = express.Router();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(express.static(path.resolve('build')));
 
 router.route('/login').post(({ body }, res) => {
   const { username, password } = body;

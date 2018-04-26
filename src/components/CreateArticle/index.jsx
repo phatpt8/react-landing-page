@@ -4,7 +4,7 @@ import { Editor } from 'react-draft-wysiwyg';
 import { convertToRaw } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import { Form, Input, Button } from 'antd';
+import { Form, Input } from 'antd';
 import './index.css';
 
 const Item = Form.Item;
