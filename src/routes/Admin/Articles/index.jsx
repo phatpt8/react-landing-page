@@ -27,15 +27,13 @@ class AdminArticles extends PureComponent {
 }
 
 const mapStateToProps = ({ admin }) => admin;
-const dispatchPropsToState = dispatch => {
-  return {
-    onSubmitCreate: () => {
-      dispatch({ type: 'admin/newArticle', payload: { newArticle: true, forceSubmit: true } });
-    },
-    onCreateArticle: newArticle => () => {
-      dispatch({ type: 'admin/newArticle', payload: { newArticle } });
-      dispatch(routerRedux.push(newArticle ? '/admin/articles/create' : '/admin/articles'));
-    },
-  };
-};
+const dispatchPropsToState = dispatch => ({
+  onSubmitCreate: () => {
+    dispatch({ type: 'admin/newArticle', payload: { newArticle: true, forceSubmit: true } });
+  },
+  onCreateArticle: newArticle => () => {
+    dispatch({ type: 'admin/newArticle', payload: { newArticle } });
+    dispatch(routerRedux.push(newArticle ? '/admin/articles/create' : '/admin/articles'));
+  },
+});
 export default connect(mapStateToProps, dispatchPropsToState)(AdminArticles);
