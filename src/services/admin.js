@@ -8,6 +8,10 @@ export function fetchArticles() {
   return get('/api/articles');
 }
 
+export function createArticle(values) {
+  return post('/api/articles', values);
+}
+
 export function fetch({ page = 1 }) {
   return get(`/api/users`);
 }
@@ -21,5 +25,5 @@ export function update(id, values) {
 }
 
 export function create(values) {
-  return post('/api/users', values);
+  return post('/api/articles', values);
 }

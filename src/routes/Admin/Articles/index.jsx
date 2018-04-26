@@ -9,11 +9,12 @@ import './index.css';
 
 class AdminArticles extends PureComponent {
   render() {
-    const { articles, onCreateArticle, newArticle } = this.props;
+    const { articles, onCreateArticle, newArticle, onSubmitCreate } = this.props;
     return (
       <AdminLayout>
         <div className="admin-articles">
           <ActionNav
+            onSubmitCreate={onSubmitCreate}
             onClickCreate={onCreateArticle(true)}
             onBack={onCreateArticle(false)}
             showBackBtn={newArticle}
@@ -28,6 +29,9 @@ class AdminArticles extends PureComponent {
 const mapStateToProps = ({ admin }) => admin;
 const dispatchPropsToState = dispatch => {
   return {
+    onSubmitCreate: () => {
+      dispatch({ type: 'admin/newArticle', payload: { newArticle: true, forceSubmit: true } });
+    },
     onCreateArticle: newArticle => () => {
       dispatch({ type: 'admin/newArticle', payload: { newArticle } });
       dispatch(routerRedux.push(newArticle ? '/admin/articles/create' : '/admin/articles'));

@@ -1,19 +1,37 @@
-import React, { Component } from 'react';
-import { Button, Divider } from 'antd';
+import React from 'react';
+import { Button, Divider, Icon } from 'antd';
 import './index.css';
 
-export default function ActionNav({ onClickCreate = () => {}, onBack = () => {}, showBackBtn }) {
+const ButtonGroup = Button.Group;
+export default function ActionNav({
+  onSubmitCreate = () => {},
+  onClickCreate = () => {},
+  onBack = () => {},
+  showBackBtn,
+}) {
   return (
     <div className="action-navigator">
       <div className="action-navigator-controller">
-        <Button
-          type="primary"
-          icon={showBackBtn ? 'left' : 'plus-square-o'}
-          onClick={showBackBtn ? onBack : onClickCreate}
-          className="action-navigator-button-create"
-        >
-          {showBackBtn ? 'Back' : 'Create'}
-        </Button>
+        {showBackBtn ? (
+          <ButtonGroup style={{ paddingLeft: '20px' }}>
+            <Button type="primary" icon="left" onClick={onBack}>
+              Back
+            </Button>
+            <Button type="primary" onClick={onSubmitCreate}>
+              Create
+              <Icon type="plus-square-o" />
+            </Button>
+          </ButtonGroup>
+        ) : (
+          <Button
+            type="primary"
+            icon="plus-square-o"
+            onClick={onClickCreate}
+            className="action-navigator-button-create"
+          >
+            {showBackBtn ? 'Back' : 'Create'}
+          </Button>
+        )}
       </div>
       <Divider />
     </div>

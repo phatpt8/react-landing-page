@@ -13,7 +13,7 @@ router.route('/login').post(({ body }, res) => {
   const { username, password } = body;
   const { count, userName, role } = db
     .prepare(
-      'SELECT COUNT(*) as count, username as userName, role FROM admin WHERE username=? AND password=?'
+      'SELECT COUNT(*) as count, rowid, username as userName, role FROM admin WHERE username=? AND password=?'
     )
     .get(username, password);
   res.json({ count, username: userName, role });

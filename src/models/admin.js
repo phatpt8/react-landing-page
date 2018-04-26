@@ -6,6 +6,7 @@ export default {
   namespace: 'admin',
   state: {
     isAuth: true,
+    userId: '',
     username: '',
     role: '',
     error: '',
@@ -20,14 +21,18 @@ export default {
   effects: {
     *login({ payload: { username, password } }, { call, put }) {
       try {
-        const { data: { count, role, userName = username } } = yield call(adminService.login, {
-          username,
-          password,
-        });
+        const { data: { count, rowid, role, userName = username } } = yield call(
+          adminService.login,
+          {
+            username,
+            password,
+          }
+        );
         if (!!count) {
           yield put({
             type: 'save',
             payload: {
+              userId: rowid,
               username: userName,
               role,
               isAuth: true,
@@ -53,11 +58,25 @@ export default {
         });
       }
     },
-    *newArticle({ payload: { newArticle } }, { put }) {
+    *createNewArticle({ payload: { values } }, { call, put }) {
+      try {
+        const data = yield call(adminService.createArticle, values);
+        console.log(data);
+        // yield put({ type: 'save', payload: { articles } });
+      } catch (e) {
+        notification.error({
+          message: 'Error occurs',
+          description: 'Server is offline',
+        });
+      }
+      yield put({ type: 'newArticle', payload: {} });
+    },
+    *newArticle({ payload: { newArticle = false, forceSubmit = false } }, { put }) {
       yield put({
         type: 'save',
         payload: {
           newArticle,
+          forceSubmit,
         },
       });
     },
